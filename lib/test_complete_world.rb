@@ -7,13 +7,13 @@ class TestCompleteWorld
     @script_unit = script_unit
 
     puts 'Connecting to TestComplete'
-    @test_complete = Win32OLE.connect('TestComplete.TestCompleteApplication')
+    @test_complete = WIN32OLE.connect('TestComplete.TestCompleteApplication')
 
     begin
       @test_complete.Integration
     rescue
       puts 'TestComplete does not appear to be running - starting instead'
-      @test_complete = Win32OLE.new('TestComplete.TestCompleteApplication')
+      @test_complete = WIN32OLE.new('TestComplete.TestCompleteApplication')
     end
 
     file = File.new(@test_complete_path)
