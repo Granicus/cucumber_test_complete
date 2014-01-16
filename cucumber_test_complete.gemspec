@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = 'A gem for integrating TestComplete into your Cucumber World'
   s.authors     = ['Nathan Holland']
   s.email       = 'NathanH@granicus.com'
-  s.files       = ['lib/test_complete_world.rb']
+  s.files       = ['lib/cucumber_test_complete.rb']
   s.homepage    = 'http://rubygems.org/gems/cucumber_test_complete'
   s.license     = 'MIT'
   s.requirements << 'win32ole'

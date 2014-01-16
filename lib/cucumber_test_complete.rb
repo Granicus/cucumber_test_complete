@@ -51,7 +51,7 @@ class TestCompleteWorld
     @test_complete.Integration.GetLastResultDescription.Status.should_not eq 2
   end
 
-  def run_routine_ex(name, *args=[])
+  def run_routine_ex(name, *args)
     puts "Running #{name} with arguments #{args} in project #{@project_name}"
     begin
       run_with_delays do
@@ -62,7 +62,7 @@ class TestCompleteWorld
     end
   end
 
-  def call_script(name, *args=[])
+  def call_script(name, *args)
     unless args.empty?
       run_routine_ex(name, args)
     else
