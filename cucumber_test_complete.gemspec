@@ -7,6 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Nathan Holland']
   s.email       = 'NathanH@granicus.com'
   s.files       = ['lib/test_complete_world.rb']
-  s.homepage    = ''
+  s.homepage    = 'http://rubygems.org/gems/cucumber_test_complete'
   s.license     = 'MIT'
+  s.requirements << 'win32ole'
+  s.requirements << 'rspec-expectations'
 end
