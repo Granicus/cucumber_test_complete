@@ -17,14 +17,14 @@ class TestCompleteWorld
     end
 
     file = File.new(@test_complete_path)
-    @test_complete_path = file.absolute_path
+    @test_complete_path = file.path
 
     puts "Connected to TestComplete - making visible and opening project #{@test_complete_path}"
 
     @test_complete.Visible = true
     @test_complete.Integration.OpenProjectSuite(@test_complete_path)
 
-    @inegration = @test_complete.Integration
+    @integration = @test_complete.Integration
   end
 
   def run_routine(name)
@@ -52,7 +52,7 @@ class TestCompleteWorld
     @test_complete.Integration.GetLastResultDescription.Status.should_not eq 2
   end
 
-  def run_routine_ex(name, *args = [])
+  def run_routine_ex(name, args={})
     puts "Running #{name} with arguments #{args} in project #{@project_name}"
     begin
       run_with_delays do
@@ -63,7 +63,7 @@ class TestCompleteWorld
     end
   end
 
-  def call_script(name, *args = [])
+  def call_script(name, args={})
     unless args.empty?
       run_routine_ex(name, args)
     else
