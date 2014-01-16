@@ -2,7 +2,7 @@ require 'win32ole'
 require 'rspec-expectations'
 
 class TestCompleteWorld
-  def initialize(@test_complete_path, project_name, script_unit)
+  def initialize(test_complete_path, project_name, script_unit)
     @project_name = project_name
     @script_unit = script_unit
 
@@ -16,13 +16,13 @@ class TestCompleteWorld
       @test_complete = WIN32OLE.new('TestComplete.TestCompleteApplication')
     end
 
-    file = File.new(@test_complete_path)
-    @test_complete_path = file.path
+    file = File.new(test_complete_path)
+    test_complete_path = file.path
 
-    puts "Connected to TestComplete - making visible and opening project #{@test_complete_path}"
+    puts "Connected to TestComplete - making visible and opening project #{test_complete_path}"
 
     @test_complete.Visible = true
-    @test_complete.Integration.OpenProjectSuite(@test_complete_path)
+    @test_complete.Integration.OpenProjectSuite(test_complete_path)
 
     @integration = @test_complete.Integration
   end
