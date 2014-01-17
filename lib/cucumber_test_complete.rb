@@ -15,8 +15,9 @@ class TestCompleteWorld
       puts 'TestComplete does not appear to be running - starting instead'
       @test_complete = WIN32OLE.new('TestComplete.TestCompleteApplication')
     end
-
-    test_complete_path = File.path(test_complete_path)
+	
+	#dumb windows thing
+    test_complete_path = test_complete_path.gsub! '/', '\\'
 
     puts "Connected to TestComplete - making visible and opening project #{test_complete_path}"
 
@@ -27,7 +28,7 @@ class TestCompleteWorld
   end
 
   def run_routine(name)
-    puts "Running #{name} in project #{project_name}"
+    puts "Running #{name} in project #{@project_name}"
     begin
       run_with_delays do
         @integration.RunRoutine(@project_name, @script_unit, name)
