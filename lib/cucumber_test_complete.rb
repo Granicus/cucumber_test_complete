@@ -5,15 +5,17 @@ class TestCompleteWorld
 
   def initialize(test_complete_path, project_name)
     @project_name = project_name
-    #@script_unit = ""
-
+	
+	#application_to_use = 'TestExecute.TestExecuteApplication'
+	application_to_use = 'TestComplete.TestCompleteApplication'
+	
     begin
 		puts 'Connecting to TestExecute'
-	    @test_execute = WIN32OLE.connect('TestExecute.TestExecuteApplication')
+	    @test_execute = WIN32OLE.connect(application_to_use)
 		@test_execute.Integration
     rescue
 		puts 'TestExecute does not appear to be running - starting instead'
-		Thread.new {@test_execute = WIN32OLE.new('TestExecute.TestExecuteApplication')}
+		Thread.new {@test_execute = WIN32OLE.new(application_to_use)}
     end
 	
 	#dumb windows thing
@@ -21,7 +23,7 @@ class TestCompleteWorld
 
     puts "Connected to TestComplete - making visible and opening project #{test_complete_path}"
 
-    #@test_execute.Visible = true
+    @test_execute.Visible = true #works only with testcomplete
     @test_execute.Integration.OpenProjectSuite(test_complete_path)
 
     @integration = @test_execute.Integration
@@ -52,7 +54,7 @@ class TestCompleteWorld
     @test_execute.Integration.GetLastResultDescription.Status.should_not eq 2
   end
 
-  def run_routine_ex(name, script_unit, *args)
+  def run_routine_ex(name, script_unit, args=[])
     puts "Running #{name} with arguments #{args} in project #{@project_name}"
     begin
       run_with_delays do
