@@ -16,7 +16,7 @@ class TestCompleteWorld
       @test_complete = WIN32OLE.new('TestComplete.TestCompleteApplication')
     end
 
-    test_complete_path = File.expand_path(test_complete_path)
+    test_complete_path = File.path(test_complete_path)
 
     puts "Connected to TestComplete - making visible and opening project #{test_complete_path}"
 
