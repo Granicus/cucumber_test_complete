@@ -2,18 +2,18 @@ require 'win32ole'
 require 'rspec-expectations'
 
 class TestCompleteWorld
-  def initialize(test_complete_path, project_name, script_unit)
-    @project_name = project_name
-    @script_unit = script_unit
 
-    puts 'Connecting to TestComplete'
-    @test_complete = WIN32OLE.connect('TestComplete.TestCompleteApplication')
+  def initialize(test_complete_path, project_name)
+    @project_name = project_name
+    #@script_unit = ""
 
     begin
-      @test_complete.Integration
+		puts 'Connecting to TestExecute'
+	    @test_execute = WIN32OLE.connect('TestExecute.TestExecuteApplication')
+		@test_execute.Integration
     rescue
-      puts 'TestComplete does not appear to be running - starting instead'
-      @test_complete = WIN32OLE.new('TestComplete.TestCompleteApplication')
+		puts 'TestExecute does not appear to be running - starting instead'
+		Thread.new {@test_execute = WIN32OLE.new('TestExecute.TestExecuteApplication')}
     end
 	
 	#dumb windows thing
@@ -21,17 +21,17 @@ class TestCompleteWorld
 
     puts "Connected to TestComplete - making visible and opening project #{test_complete_path}"
 
-    @test_complete.Visible = true
-    @test_complete.Integration.OpenProjectSuite(test_complete_path)
+    #@test_execute.Visible = true
+    @test_execute.Integration.OpenProjectSuite(test_complete_path)
 
-    @integration = @test_complete.Integration
+    @integration = @test_execute.Integration
   end
 
-  def run_routine(name)
+  def run_routine(name,script_unit)
     puts "Running #{name} in project #{@project_name}"
     begin
       run_with_delays do
-        @integration.RunRoutine(@project_name, @script_unit, name)
+        @integration.RunRoutine(@project_name, script_unit, name)
       end
     rescue
       raise "Call to #{name} failed"
@@ -49,25 +49,25 @@ class TestCompleteWorld
       sleep 0.1
     end
 
-    @test_complete.Integration.GetLastResultDescription.Status.should_not eq 2
+    @test_execute.Integration.GetLastResultDescription.Status.should_not eq 2
   end
 
-  def run_routine_ex(name, *args)
+  def run_routine_ex(name, script_unit, *args)
     puts "Running #{name} with arguments #{args} in project #{@project_name}"
     begin
       run_with_delays do
-        @integration.RunRoutineEx(@project_name, @script_unit, name, args)
+        @integration.RunRoutineEx(@project_name, script_unit, name, args)
       end
     rescue
       raise "Call to #{name} with arguments #{args} failed"
     end
   end
 
-  def call_script(name, *args)
+  def call_script(name, script_unit, *args)
     unless args.empty?
-      run_routine_ex(name, args)
+      run_routine_ex(name,script_unit, args)
     else
-      run_routine(name)
+      run_routine(name,script_unit)
     end
   end
 end
