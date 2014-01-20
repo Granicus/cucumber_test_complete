@@ -6,24 +6,23 @@ class TestCompleteWorld
   def initialize(test_complete_path, project_name)
     @project_name = project_name
 	
-	#application_to_use = 'TestExecute.TestExecuteApplication'
-	application_to_use = 'TestComplete.TestCompleteApplication'
-	
+    application_to_use = 'TestComplete.TestCompleteApplication'
+    
     begin
-		puts 'Connecting to TestExecute'
-	    @test_execute = WIN32OLE.connect(application_to_use)
-		@test_execute.Integration
+      puts 'Connecting to TestExecute'
+      @test_execute = WIN32OLE.connect(application_to_use)
+      @test_execute.Integration
     rescue
-		puts 'TestExecute does not appear to be running - starting instead'
-		Thread.new {@test_execute = WIN32OLE.new(application_to_use)}
+      puts 'TestExecute does not appear to be running - starting instead'
+      Thread.new {@test_execute = WIN32OLE.new(application_to_use)}
     end
-	
-	#dumb windows thing
-    test_complete_path = test_complete_path.gsub! '/', '\\'
+    
+    # dumb windows thing
+    test_complete_path = test_complete_path.gsub!('/', '\\')
 
     puts "Connected to TestComplete - making visible and opening project #{test_complete_path}"
 
-    @test_execute.Visible = true #works only with testcomplete
+    @test_execute.Visible = true # works only with testcomplete
     @test_execute.Integration.OpenProjectSuite(test_complete_path)
 
     @integration = @test_execute.Integration
