@@ -20,7 +20,7 @@ class TestCompleteWorld
       @test_execute.Integration
     rescue
       puts "#{options[:application]} does not appear to be running - starting instead"
-      Thread.new {@test_execute = WIN32OLE.new(application_to_use)}
+      @test_execute = WIN32OLE.new(application_to_use)
     end
     
     # dumb windows thing
