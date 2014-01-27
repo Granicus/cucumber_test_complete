@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'cucumber_test_complete'
-  s.version     = '0.1.6'
+  s.version     = '0.1.7'
   s.date        = '2014-01-27'
   s.summary     = 'Test Complete for Cucumber'
   s.description = 'A gem for integrating TestComplete into your Cucumber Ruby World'
