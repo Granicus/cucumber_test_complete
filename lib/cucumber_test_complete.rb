@@ -19,7 +19,7 @@ class TestCompleteWorld
       @test_execute = WIN32OLE.connect(application_to_use)
       @test_execute.Integration
     rescue
-      puts "#{options[:appliation]} does not appear to be running - starting instead"
+      puts "#{options[:application]} does not appear to be running - starting instead"
       Thread.new {@test_execute = WIN32OLE.new(application_to_use)}
     end
     
@@ -28,8 +28,10 @@ class TestCompleteWorld
 
     puts "Connected to #{options[:application]} - making visible and opening project #{test_complete_path}"
 
-    @test_execute.Visible = true # works only with testcomplete
-    @test_execute.Integration.OpenProjectSuite(test_complete_path)
+    
+	@test_execute.Visible = true unless options[:application] == "TestExecute"
+    
+	@test_execute.Integration.OpenProjectSuite(test_complete_path)
 
     @integration = @test_execute.Integration
   end
