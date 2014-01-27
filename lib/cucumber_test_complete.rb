@@ -3,24 +3,30 @@ require 'rspec-expectations'
 
 class TestCompleteWorld
 
-  def initialize(test_complete_path, project_name)
+  def initialize(test_complete_path, project_name, options = {})
+    defaults = {
+      application: 'TestComplete'
+    }
+
+    options = defaults.merge(options)
+
     @project_name = project_name
 	
-    application_to_use = 'TestComplete.TestCompleteApplication'
+    application_to_use = "#{options[:application]}.#{options[:application]}Application"
     
     begin
-      puts 'Connecting to TestExecute'
+      puts "Connecting to #{options[:application]}"
       @test_execute = WIN32OLE.connect(application_to_use)
       @test_execute.Integration
     rescue
-      puts 'TestExecute does not appear to be running - starting instead'
+      puts "#{options[:appliation]} does not appear to be running - starting instead"
       Thread.new {@test_execute = WIN32OLE.new(application_to_use)}
     end
     
     # dumb windows thing
     test_complete_path = test_complete_path.gsub!('/', '\\')
 
-    puts "Connected to TestComplete - making visible and opening project #{test_complete_path}"
+    puts "Connected to #{options[:application]} - making visible and opening project #{test_complete_path}"
 
     @test_execute.Visible = true # works only with testcomplete
     @test_execute.Integration.OpenProjectSuite(test_complete_path)
