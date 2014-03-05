@@ -29,14 +29,14 @@ class TestCompleteWorld
     puts "Connected to #{options[:application]} - making visible and opening project #{test_complete_path}"
 
     
-	@test_execute.Visible = true unless options[:application] == "TestExecute"
+	  @test_execute.Visible = true unless options[:application] == "TestExecute"
     
-	@test_execute.Integration.OpenProjectSuite(test_complete_path)
+	  @test_execute.Integration.OpenProjectSuite(test_complete_path)
 
     @integration = @test_execute.Integration
   end
 
-  def run_routine(name,script_unit)
+  def run_routine(name, script_unit)
     puts "Running #{name} in project #{@project_name}"
     begin
       run_with_delays do
@@ -78,6 +78,7 @@ class TestCompleteWorld
     else
       run_routine(name,script_unit)
     end
-	@integration.RoutineResult
+
+	  @integration.RoutineResult
   end
 end
