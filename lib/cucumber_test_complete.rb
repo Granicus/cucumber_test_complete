@@ -78,5 +78,6 @@ class TestCompleteWorld
     else
       run_routine(name,script_unit)
     end
+	@integration.RoutineResult
   end
 end
