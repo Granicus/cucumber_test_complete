@@ -29,13 +29,9 @@ class TestCompleteWorld
     puts "Connected to #{options[:application]} - making visible and opening project #{test_complete_path}"
 
     
-    @test_execute.Visible = true unless options[:application] == "TestExecute"
+	  @test_execute.Visible = true unless options[:application] == "TestExecute"
     
-    @test_execute.Integration.OpenProjectSuite(test_complete_path)
-
-    if options[:application] == 'TestComplete'
-      @test_execute.Manager.RunMode = 3
-    end
+	  @test_execute.Integration.OpenProjectSuite(test_complete_path)
 
     @integration = @test_execute.Integration
   end
